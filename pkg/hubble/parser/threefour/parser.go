@@ -204,6 +204,7 @@ func (p *Parser) Decode(data []byte, decoded *pb.Flow) error {
 	decoded.SourceService = sourceService
 	decoded.DestinationService = destinationService
 	decoded.PolicyMatchType = decodePolicyMatchType(pvn)
+	decoded.DebugCapturePoint = decodeDebugCapturePoint(dbg)
 	decoded.Summary = summary
 
 	return nil
@@ -615,4 +616,11 @@ func getTCPFlags(tcp layers.TCP) string {
 	}
 
 	return strings.Join(info, comma)
+}
+
+func decodeDebugCapturePoint(dbg *monitor.DebugCapture) pb.DebugCapturePoint {
+	if dbg == nil {
+		return pb.DebugCapturePoint_DBG_CAPTURE_POINT_UNKNOWN
+	}
+	return pb.DebugCapturePoint(dbg.SubType)
 }
