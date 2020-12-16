@@ -25,6 +25,7 @@ import (
 
 	pb "github.com/cilium/cilium/api/v1/flow"
 	"github.com/cilium/cilium/pkg/byteorder"
+	"github.com/cilium/cilium/pkg/datapath/link"
 	"github.com/cilium/cilium/pkg/hubble/parser/errors"
 	"github.com/cilium/cilium/pkg/hubble/parser/getters"
 	"github.com/cilium/cilium/pkg/identity"
@@ -205,6 +206,7 @@ func (p *Parser) Decode(data []byte, decoded *pb.Flow) error {
 	decoded.DestinationService = destinationService
 	decoded.PolicyMatchType = decodePolicyMatchType(pvn)
 	decoded.DebugCapturePoint = decodeDebugCapturePoint(dbg)
+	decoded.Interface = decodeNetworkInterface(tn, dbg)
 	decoded.Summary = summary
 
 	return nil
@@ -623,4 +625,32 @@ func decodeDebugCapturePoint(dbg *monitor.DebugCapture) pb.DebugCapturePoint {
 		return pb.DebugCapturePoint_DBG_CAPTURE_POINT_UNKNOWN
 	}
 	return pb.DebugCapturePoint(dbg.SubType)
+}
+
+func decodeNetworkInterface(tn *monitor.TraceNotify, dbg *monitor.DebugCapture) *pb.NetworkInterface {
+	ifIndex := 0
+	if tn != nil {
+		ifIndex = int(tn.Ifindex)
+	} else if dbg != nil {
+		switch dbg.SubType {
+		case monitor.DbgCaptureDelivery,
+			monitor.DbgCaptureFromLb,
+			monitor.DbgCaptureAfterV46,
+			monitor.DbgCaptureAfterV64,
+			monitor.DbgCaptureSnatPre,
+			monitor.DbgCaptureSnatPost:
+			ifIndex = int(dbg.Arg1)
+		}
+	}
+
+	if ifIndex == 0 {
+		return nil
+	}
+
+	// if the interface it not found, name will be an empty string
+	name, _ := link.GetIfNameCached(ifIndex)
+	return &pb.NetworkInterface{
+		Index: uint32(ifIndex),
+		Name:  name,
+	}
 }
