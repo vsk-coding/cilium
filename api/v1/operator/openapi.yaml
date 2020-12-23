@@ -1,0 +1,54 @@
+---
+swagger: '2.0'
+info:
+  title: Cilium Operator
+  description: Cilium
+  version: v1beta
+x-schemes:
+- unix
+basePath: "/v1beta"
+produces:
+- application/json
+consumes:
+- application/json
+paths:
+  "/metrics/":
+    get:
+      summary: Retrieve cilium operator metrics
+      tags:
+      - metrics
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          schema:
+            type: array
+            items:
+              "$ref": "../openapi.yaml#/definitions/Metric"
+        '500':
+          x-go-name: Failed
+          description: Metrics cannot be retrieved
+  "/healthz":
+    get:
+      summary: Get health of Cilium operator
+      description: This path will return the status of cilium operator instance.
+      tags:
+      - operator
+      parameters: []
+      responses:
+        '200':
+          description: Cilium operator is healthy
+          schema:
+            "$ref": "#/definitions/StatusResponse"
+        '500':
+          description: Cilium operator is not healthy
+          schema:
+            "$ref": "#/definitions/StatusResponse"
+definitions:
+  StatusResponse:
+    description: Health information for the operator
+    type: object
+    properties:
+      status:
+        description: Status of Cilium operator
+        type: string
