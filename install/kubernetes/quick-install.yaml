@@ -696,7 +696,7 @@ spec:
         livenessProbe:
           httpGet:
             host: '127.0.0.1'
-            path: /healthz
+            path: /v1beta/healthz
             port: 9234
             scheme: HTTP
           initialDelaySeconds: 60
