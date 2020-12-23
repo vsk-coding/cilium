@@ -93,14 +93,8 @@ func (s *Server) WithStatusCheckFunc(f func() error) *Server {
 	return s
 }
 
-// Serve spins up the following goroutines:
-// * TCP API Server: Responders to the health API "/hello" message, one per path
-// * Prober: Periodically run pings across the cluster at a configured interval
-//   and update the server's connectivity status cache.
-// * Unix API Server: Handle all health API requests over a unix socket.
-//
-// Callers should first defer the Server.Shutdown(), then call Serve().
-func (s *Server) Serve() error {
+// StartServer starts the HTTP listeners for the apiserver.
+func (s *Server) StartServer() error {
 	errs := make(chan error, 1)
 	nServers := 0
 
@@ -112,7 +106,10 @@ func (s *Server) Serve() error {
 			continue
 		}
 		nServers++
-		srv := &http.Server{Addr: addr}
+		srv := &http.Server{
+			Addr:    addr,
+			Handler: s.Server.GetHandler(),
+		}
 		errCh := make(chan error, 1)
 
 		lc := net.ListenConfig{Control: setsockoptReuseAddrAndPort}
