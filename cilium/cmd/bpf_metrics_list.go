@@ -22,7 +22,6 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/cilium/cilium/pkg/bpf"
 	"github.com/cilium/cilium/pkg/command"
 	"github.com/cilium/cilium/pkg/common"
 	"github.com/cilium/cilium/pkg/maps/metricsmap"
@@ -70,13 +69,9 @@ var bpfMetricsListCmd = &cobra.Command{
 
 func listMetrics(m metricsmap.MetricsMap) {
 	bpfMetricsList := make(map[string]string)
-	callback := func(key bpf.MapKey, value bpf.MapValue) {
-		bpfMetricsList[key.String()] = value.String()
-	}
-	if err := m.DumpWithCallback(callback); err != nil {
-		fmt.Fprintf(os.Stderr, "error dumping contents of map: %s\n", err)
-		os.Exit(1)
-	}
+	m.IterateWithCallback(func(key *metricsmap.Key, values *[]metricsmap.Value) {
+		bpfMetricsList[key.String()] = metricsmap.Values(*values).String()
+	})
 
 	if command.OutputJSON() {
 		listJSONMetrics(bpfMetricsList)
@@ -222,6 +217,8 @@ func extractTwoValues(str string) (string, string, bool) {
 }
 
 func init() {
+	metricsmap.Metrics.OpenOrCreate()
+
 	bpfMetricsCmd.AddCommand(bpfMetricsListCmd)
 	command.AddJSONOutput(bpfMetricsListCmd)
 }
