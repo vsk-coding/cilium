@@ -96,9 +96,6 @@ type Value struct {
 	Bytes uint64 `align:"bytes"`
 }
 
-// Values is a slice of Values
-type Values []Value
-
 func (m metricsMap) IterateWithCallback(cb IterateCallback) {
 	var key Key
 	var values []Value
@@ -112,21 +109,6 @@ func (m metricsMap) IterateWithCallback(cb IterateCallback) {
 	for entries.Next(&key, &values) {
 		cb(&key, &values)
 	}
-}
-
-// String converts the value into a human readable string format
-func (vs Values) String() string {
-	sumCount, sumBytes := uint64(0), uint64(0)
-	for _, v := range vs {
-		sumCount += v.Count
-		sumBytes += v.Bytes
-	}
-	return fmt.Sprintf("count:%d bytes:%d", sumCount, sumBytes)
-}
-
-// String converts the key into a human readable string format
-func (k *Key) String() string {
-	return fmt.Sprintf("reason:%d dir:%d", k.Reason, k.Dir)
 }
 
 // MetricDirection gets the direction in human readable string format
@@ -145,11 +127,6 @@ func (k *Key) Direction() string {
 // DropForwardReason gets the forwarded/dropped reason in human readable string format
 func (k *Key) DropForwardReason() string {
 	return monitorAPI.DropReason(k.Reason)
-}
-
-// String converts the value into a human readable string format
-func (v *Value) String() string {
-	return fmt.Sprintf("count:%d bytes:%d", v.Count, v.Bytes)
 }
 
 // IsDrop checks if the reason is drop or not.
