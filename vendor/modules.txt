@@ -240,7 +240,7 @@ github.com/emicklei/go-restful/log
 github.com/envoyproxy/protoc-gen-validate/validate
 # github.com/evanphx/json-patch v4.9.0+incompatible
 github.com/evanphx/json-patch
-# github.com/fatih/color v1.7.0
+# github.com/fatih/color v1.9.0
 github.com/fatih/color
 # github.com/form3tech-oss/jwt-go v3.2.2+incompatible
 github.com/form3tech-oss/jwt-go
@@ -370,15 +370,17 @@ github.com/googleapis/gnostic/openapiv2
 # github.com/gorilla/mux v1.8.0
 ## explicit
 github.com/gorilla/mux
-# github.com/hashicorp/consul/api v1.3.0
+# github.com/hashicorp/consul/api v1.8.1
 ## explicit
 github.com/hashicorp/consul/api
 # github.com/hashicorp/go-cleanhttp v0.5.1
 github.com/hashicorp/go-cleanhttp
+# github.com/hashicorp/go-hclog v0.12.0
+github.com/hashicorp/go-hclog
 # github.com/hashicorp/go-immutable-radix v1.3.0
 ## explicit
 github.com/hashicorp/go-immutable-radix
-# github.com/hashicorp/go-rootcerts v1.0.0
+# github.com/hashicorp/go-rootcerts v1.0.2
 github.com/hashicorp/go-rootcerts
 # github.com/hashicorp/golang-lru v0.5.4
 ## explicit
@@ -395,7 +397,7 @@ github.com/hashicorp/hcl/hcl/token
 github.com/hashicorp/hcl/json/parser
 github.com/hashicorp/hcl/json/scanner
 github.com/hashicorp/hcl/json/token
-# github.com/hashicorp/serf v0.8.2
+# github.com/hashicorp/serf v0.9.5
 github.com/hashicorp/serf/coordinate
 # github.com/imdario/mergo v0.3.5
 github.com/imdario/mergo
@@ -430,16 +432,16 @@ github.com/magiconair/properties
 github.com/mailru/easyjson/buffer
 github.com/mailru/easyjson/jlexer
 github.com/mailru/easyjson/jwriter
-# github.com/mattn/go-colorable v0.0.9
+# github.com/mattn/go-colorable v0.1.6
 github.com/mattn/go-colorable
-# github.com/mattn/go-isatty v0.0.4
+# github.com/mattn/go-isatty v0.0.12
 github.com/mattn/go-isatty
 # github.com/mattn/go-shellwords v1.0.10
 ## explicit
 github.com/mattn/go-shellwords
 # github.com/matttproud/golang_protobuf_extensions v1.0.2-0.20181231171920-c182affec369
 github.com/matttproud/golang_protobuf_extensions/pbutil
-# github.com/miekg/dns v1.0.14 => github.com/cilium/dns v1.1.4-0.20190417235132-8e25ec9a0ff3
+# github.com/miekg/dns v1.1.26 => github.com/cilium/dns v1.1.4-0.20190417235132-8e25ec9a0ff3
 ## explicit
 github.com/miekg/dns
 # github.com/mitchellh/go-homedir v1.1.0

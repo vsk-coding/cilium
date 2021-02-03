@@ -47,7 +47,7 @@ require (
 	github.com/google/renameio v1.0.0
 	github.com/google/uuid v1.1.4
 	github.com/gorilla/mux v1.8.0
-	github.com/hashicorp/consul/api v1.3.0
+	github.com/hashicorp/consul/api v1.8.1
 	github.com/hashicorp/go-immutable-radix v1.3.0
 	github.com/hashicorp/golang-lru v0.5.4
 	// must be bound to this old version not to break libnetwork
@@ -56,7 +56,7 @@ require (
 	github.com/kevinburke/ssh_config v0.0.0-20201106050909-4977a11b4351
 	github.com/kr/pretty v0.2.1
 	github.com/mattn/go-shellwords v1.0.10
-	github.com/miekg/dns v1.0.14
+	github.com/miekg/dns v1.1.26
 	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/onsi/ginkgo v1.12.1
 	github.com/onsi/gomega v1.10.5
